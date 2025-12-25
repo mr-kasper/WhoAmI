@@ -628,11 +628,20 @@ public class ResultsController {
 
     javafx.scene.image.WritableImage image = resultsTable.snapshot(new javafx.scene.SnapshotParameters(), null);
 
-    javax.imageio.ImageIO.write(
-        new java.awt.image.BufferedImage(
-            (int) image.getWidth(), (int) image.getHeight(), java.awt.image.BufferedImage.TYPE_INT_RGB),
-        "png",
-        outputFile);
+    // Convert WritableImage to BufferedImage properly
+    int width = (int) image.getWidth();
+    int height = (int) image.getHeight();
+    java.awt.image.BufferedImage bufferedImage = new java.awt.image.BufferedImage(
+        width, height, java.awt.image.BufferedImage.TYPE_INT_RGB);
+
+    javafx.scene.image.PixelReader pixelReader = image.getPixelReader();
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        bufferedImage.setRGB(x, y, pixelReader.getArgb(x, y));
+      }
+    }
+
+    javax.imageio.ImageIO.write(bufferedImage, "png", outputFile);
   }
 
   private void updateLanguageTexts() {

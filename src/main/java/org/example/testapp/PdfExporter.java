@@ -1,6 +1,7 @@
 package org.example.testapp;
 
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 
@@ -15,8 +16,9 @@ import java.time.format.DateTimeFormatter;
 public class PdfExporter {
 
   public static void exportReport(String title, String content, File outputFile) throws Exception {
-    PdfWriter writer = new PdfWriter(outputFile);
-    Document document = new Document(new com.itextpdf.kernel.pdf.PdfDocument(writer));
+    PdfWriter writer = new PdfWriter(outputFile.getAbsolutePath());
+    PdfDocument pdf = new PdfDocument(writer);
+    Document document = new Document(pdf);
 
     document.add(new Paragraph(title)
         .setFontSize(18)

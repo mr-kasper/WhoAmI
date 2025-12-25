@@ -57,6 +57,8 @@ public class ExcelExporter {
       try (FileOutputStream fos = new FileOutputStream(filePath)) {
         workbook.write(fos);
       }
+    } catch (IOException e) {
+      throw new IOException("Failed to export Excel report: " + e.getMessage(), e);
     }
   }
 }
