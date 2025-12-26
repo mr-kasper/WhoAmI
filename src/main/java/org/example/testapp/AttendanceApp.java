@@ -1,6 +1,8 @@
 package org.example.testapp;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,6 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.testapp.entities.Classroom;
@@ -365,30 +369,89 @@ public class AttendanceApp extends Application {
   }
 
   private Node createAuditLogView() {
-    VBox mainLayout = new VBox(10);
-    mainLayout.setPadding(new Insets(15));
+    VBox mainLayout = new VBox(15);
+    mainLayout.setPadding(new Insets(20));
+    mainLayout.getStyleClass().add("card");
 
+    // Header with icon
+    HBox headerBox = new HBox(15);
+    headerBox.setAlignment(Pos.CENTER_LEFT);
+    
+    Circle iconCircle = new Circle(25);
+    iconCircle.setFill(Color.web("#E74C3C"));
+    Label iconLabel = new Label("📋");
+    iconLabel.setStyle("-fx-font-size: 28px; -fx-text-fill: white;");
+    iconLabel.setTranslateX(-25);
+    iconLabel.setTranslateY(-25);
+    
     auditTitleLabel = new Label(LanguageManager.getInstance().get("audit_log"));
-    auditTitleLabel.getStyleClass().add("label-title");
+    auditTitleLabel.getStyleClass().add("label-header");
+    
+    Region spacer = new Region();
+    HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+    
+    Label entryCountLabel = new Label("0 entries");
+    entryCountLabel.getStyleClass().add("label-secondary");
+    
+    headerBox.getChildren().addAll(iconCircle, iconLabel, auditTitleLabel, spacer, entryCountLabel);
 
-    TextArea auditTextArea = new TextArea();
-    auditTextArea.setEditable(false);
-    auditTextArea.setWrapText(true);
-    auditTextArea.setStyle("-fx-font-family: 'Courier New', 'Consolas', monospace; -fx-font-size: 11px;");
-    auditTextArea.setText(AuditLogger.readAuditLog());
-    VBox.setVgrow(auditTextArea, Priority.ALWAYS);
+    // Audit Log Table
+    TableView<AuditLogEntry> auditTable = new TableView<>();
+    auditTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+    TableColumn<AuditLogEntry, String> timestampCol = new TableColumn<>("Date & Time");
+    timestampCol.setCellValueFactory(cellData ->
+        new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTimestamp()));
+    timestampCol.setMinWidth(160);
+    timestampCol.setPrefWidth(180);
+
+    TableColumn<AuditLogEntry, String> actionCol = new TableColumn<>("Action");
+    actionCol.setCellValueFactory(cellData ->
+        new javafx.beans.property.SimpleStringProperty(cellData.getValue().getAction()));
+    actionCol.setMinWidth(150);
+
+    TableColumn<AuditLogEntry, String> detailsCol = new TableColumn<>("Details");
+    detailsCol.setCellValueFactory(cellData ->
+        new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDetails()));
+    detailsCol.setMinWidth(350);
+    
+    // Enable text wrapping in details column
+    detailsCol.setCellFactory(tc -> {
+      TableCell<AuditLogEntry, String> cell = new TableCell<>();
+      Label label = new Label();
+      label.setWrapText(true);
+      label.setMaxWidth(Double.MAX_VALUE);
+      cell.setGraphic(label);
+      cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+      label.textProperty().bind(cell.itemProperty());
+      return cell;
+    });
+
+    auditTable.getColumns().addAll(timestampCol, actionCol, detailsCol);
+    auditTable.setPlaceholder(new Label(LanguageManager.getInstance().get("no_data")));
+
+    // Load audit log data
+    ObservableList<AuditLogEntry> auditData = FXCollections.observableArrayList();
+    loadAuditLogData(auditData);
+    auditTable.setItems(auditData);
+    entryCountLabel.setText(auditData.size() + " entries");
+
+    VBox.setVgrow(auditTable, javafx.scene.layout.Priority.ALWAYS);
+
+    // Button Box
     HBox buttonBox = new HBox(10);
-    buttonBox.setPadding(new Insets(10, 0, 0, 0));
     buttonBox.setAlignment(Pos.CENTER_LEFT);
 
     auditRefreshButton = new Button(LanguageManager.getInstance().get("refresh"));
-    auditRefreshButton.setPrefWidth(120);
-    auditRefreshButton.getStyleClass().add("button-outline");
-    auditRefreshButton.setOnAction(e -> auditTextArea.setText(AuditLogger.readAuditLog()));
+    auditRefreshButton.getStyleClass().add("button-success");
+    auditRefreshButton.setOnAction(e -> {
+      auditData.clear();
+      loadAuditLogData(auditData);
+      auditTable.setItems(auditData);
+      entryCountLabel.setText(auditData.size() + " entries");
+    });
 
     auditClearButton = new Button(LanguageManager.getInstance().get("clear_log"));
-    auditClearButton.setPrefWidth(120);
     auditClearButton.getStyleClass().add("button-danger");
     auditClearButton.setOnAction(e -> {
       Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -397,14 +460,69 @@ public class AttendanceApp extends Application {
       confirm.setContentText(LanguageManager.getInstance().get("clear_log_confirm"));
       if (confirm.showAndWait().get() == ButtonType.OK) {
         AuditLogger.clearAuditLog();
-        auditTextArea.setText(LanguageManager.getInstance().get("audit_log_cleared"));
+        auditData.clear();
+        auditTable.setItems(auditData);
+        entryCountLabel.setText("0 entries");
       }
     });
 
     buttonBox.getChildren().addAll(auditRefreshButton, auditClearButton);
 
-    mainLayout.getChildren().addAll(auditTitleLabel, auditTextArea, buttonBox);
-    return new ScrollPane(mainLayout);
+    mainLayout.getChildren().addAll(headerBox, auditTable, buttonBox);
+    
+    ScrollPane scrollPane = new ScrollPane(mainLayout);
+    scrollPane.setFitToWidth(true);
+    return scrollPane;
+  }
+
+  private void loadAuditLogData(ObservableList<AuditLogEntry> data) {
+    String logContent = AuditLogger.readAuditLog();
+    if (logContent == null || logContent.isEmpty() || logContent.contains("No audit log")) {
+      return;
+    }
+    
+    String[] lines = logContent.split("\n");
+    for (String line : lines) {
+      if (line.trim().isEmpty()) continue;
+      // Parse format: [yyyy-MM-dd HH:mm:ss] ACTION: details
+      if (line.startsWith("[") && line.contains("] ")) {
+        int closeIdx = line.indexOf("]");
+        String timestamp = line.substring(1, closeIdx);
+        
+        String rest = line.substring(closeIdx + 2); // Skip "] "
+        int colonIdx = rest.indexOf(":");
+        if (colonIdx > 0) {
+          String action = rest.substring(0, colonIdx);
+          String details = rest.substring(colonIdx + 1).trim();
+          data.add(new AuditLogEntry(timestamp, action, details));
+        }
+      }
+    }
+  }
+
+  // Helper class for audit log entries
+  public static class AuditLogEntry {
+    private final String timestamp;
+    private final String action;
+    private final String details;
+
+    public AuditLogEntry(String timestamp, String action, String details) {
+      this.timestamp = timestamp;
+      this.action = action;
+      this.details = details;
+    }
+
+    public String getTimestamp() {
+      return timestamp;
+    }
+
+    public String getAction() {
+      return action;
+    }
+
+    public String getDetails() {
+      return details;
+    }
   }
 
   private void showAboutDialog() {

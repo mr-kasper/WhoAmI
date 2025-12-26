@@ -611,6 +611,61 @@
   -fx-text-fill: #EAEAEA;
 }
 
+/* ============================================
+   Settings Sections (Light Mode)
+   ============================================ */
+.settings-weights-section {
+  -fx-background-color: #E8F4F8;
+}
+
+.settings-thresholds-section {
+  -fx-background-color: #FEF5E7;
+}
+
+.settings-control-box {
+  -fx-background-color: white;
+  -fx-background-radius: 8;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+.settings-info-box {
+  -fx-background-color: #D5DBDB;
+  -fx-background-radius: 5;
+}
+
+.settings-info-box .label {
+  -fx-text-fill: #2C3E50;
+}
+
+/* ============================================
+   Dark Mode Settings Sections
+   ============================================ */
+.dark-mode .settings-weights-section {
+  -fx-background-color: #1A2332;
+}
+
+.dark-mode .settings-thresholds-section {
+  -fx-background-color: #2E2416;
+}
+
+.dark-mode .settings-control-box {
+  -fx-background-color: #16213E;
+  -fx-background-radius: 8;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+}
+
+.dark-mode .settings-control-box .label {
+  -fx-text-fill: #EAEAEA;
+}
+
+.dark-mode .settings-info-box {
+  -fx-background-color: #2E3A4E;
+}
+
+.dark-mode .settings-info-box .label {
+  -fx-text-fill: #EAEAEA;
+}
+
 .dark-mode .chart-title {
   -fx-text-fill: #EAEAEA;
 }
