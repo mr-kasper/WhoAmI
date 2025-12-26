@@ -205,49 +205,49 @@ public class AttendanceApp extends Application {
   private MenuBar createMenuBar() {
     MenuBar menuBar = new MenuBar();
 
-    fileMenu = new Menu("File");
-    newItem = new MenuItem("New Session");
+    fileMenu = new Menu("📁 File");
+    newItem = new MenuItem("✨ New Session");
     newItem.setOnAction(e -> classroomController.newSession());
 
-    saveItem = new MenuItem("Save Session");
+    saveItem = new MenuItem("💾 Save Session");
     saveItem.setOnAction(e -> saveSession());
 
-    loadItem = new MenuItem("Load Session");
+    loadItem = new MenuItem("📂 Load Session");
     loadItem.setOnAction(e -> loadSession());
 
-    exitItem = new MenuItem("Exit");
+    exitItem = new MenuItem("🚪 Exit");
     exitItem.setOnAction(e -> primaryStage.close());
 
     fileMenu.getItems().addAll(newItem, new SeparatorMenuItem(), saveItem, loadItem,
         new SeparatorMenuItem(), exitItem);
 
-    editMenu = new Menu("Edit");
-    undoItem = new MenuItem("Undo");
+    editMenu = new Menu("✏ Edit");
+    undoItem = new MenuItem("⟲ Undo");
     undoItem.setOnAction(e -> classroomController.undo());
 
-    redoItem = new MenuItem("Redo");
+    redoItem = new MenuItem("⟳ Redo");
     redoItem.setOnAction(e -> classroomController.redo());
 
     editMenu.getItems().addAll(undoItem, redoItem);
 
-    helpMenu = new Menu("Help");
-    aboutItem = new MenuItem("About");
+    helpMenu = new Menu("ℹ Help");
+    aboutItem = new MenuItem("ℹ About");
     aboutItem.setOnAction(e -> showAboutDialog());
     helpMenu.getItems().add(aboutItem);
 
-    viewMenu = new Menu("View");
-    darkToggle = new CheckMenuItem("Dark Mode");
+    viewMenu = new Menu("👁 View");
+    darkToggle = new CheckMenuItem("🌙 Dark Mode");
     darkToggle.setOnAction(e -> applyTheme(darkToggle.isSelected()));
 
-    redactionToggle = new CheckMenuItem("Anonymize Data in Exports");
+    redactionToggle = new CheckMenuItem("🔒 Anonymize Data in Exports");
     redactionToggle.setOnAction(e -> classroomController.setRedactionEnabled(redactionToggle.isSelected()));
 
     viewMenu.getItems().addAll(darkToggle, redactionToggle);
 
-    languageMenu = new Menu("Language");
+    languageMenu = new Menu("🌐 Language");
     LanguageManager langManager = LanguageManager.getInstance();
     for (LanguageManager.Language lang : langManager.getAvailableLanguages()) {
-      MenuItem langItem = new MenuItem(lang.getDisplayName());
+      MenuItem langItem = new MenuItem("🗣 " + lang.getDisplayName());
       langItem.setOnAction(e -> {
         System.out.println("[DEBUG] Language changed to: " + lang.getDisplayName());
         langManager.setLanguage(lang);
@@ -265,25 +265,25 @@ public class AttendanceApp extends Application {
 
   private void applyTranslations() {
     LanguageManager lm = LanguageManager.getInstance();
-    // Menus
-    fileMenu.setText(lm.get("file"));
-    editMenu.setText(lm.get("edit"));
-    viewMenu.setText(lm.get("view"));
-    helpMenu.setText(lm.get("help"));
-    languageMenu.setText(lm.get("language"));
-    // File items
-    newItem.setText(lm.get("new_session"));
-    saveItem.setText(lm.get("save_session"));
-    loadItem.setText(lm.get("load_session"));
-    exitItem.setText(lm.get("exit"));
-    // Edit items
-    undoItem.setText(lm.get("undo"));
-    redoItem.setText(lm.get("redo"));
-    // View items
-    darkToggle.setText(lm.get("dark_mode"));
-    redactionToggle.setText(lm.get("anonymize_exports"));
-    // Help item
-    aboutItem.setText(lm.get("about"));
+    // Menus with icons
+    fileMenu.setText("📁 " + lm.get("file"));
+    editMenu.setText("✏ " + lm.get("edit"));
+    viewMenu.setText("👁 " + lm.get("view"));
+    helpMenu.setText("ℹ " + lm.get("help"));
+    languageMenu.setText("🌐 " + lm.get("language"));
+    // File items with icons
+    newItem.setText("✨ " + lm.get("new_session"));
+    saveItem.setText("💾 " + lm.get("save_session"));
+    loadItem.setText("📂 " + lm.get("load_session"));
+    exitItem.setText("🚪 " + lm.get("exit"));
+    // Edit items with icons
+    undoItem.setText("⟲ " + lm.get("undo"));
+    redoItem.setText("⟳ " + lm.get("redo"));
+    // View items with icons
+    darkToggle.setText("🌙 " + lm.get("dark_mode"));
+    redactionToggle.setText("🔒 " + lm.get("anonymize_exports"));
+    // Help item with icon
+    aboutItem.setText("ℹ " + lm.get("about"));
     // Tabs
     if (classroomTab != null)
       classroomTab.setText(lm.get("classroom_layout"));

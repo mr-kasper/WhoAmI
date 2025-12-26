@@ -480,10 +480,62 @@
 
 .dark-mode .button {
   -fx-background-color: #3498DB;
+  -fx-text-fill: white;
 }
 
 .dark-mode .button:hover {
   -fx-background-color: #2980B9;
+}
+
+.dark-mode .button:pressed {
+  -fx-background-color: #21618C;
+}
+
+.dark-mode .button-success {
+  -fx-background-color: #27AE60;
+}
+
+.dark-mode .button-success:hover {
+  -fx-background-color: #229954;
+}
+
+.dark-mode .button-warning {
+  -fx-background-color: #F39C12;
+}
+
+.dark-mode .button-warning:hover {
+  -fx-background-color: #D68910;
+}
+
+.dark-mode .button-danger {
+  -fx-background-color: #E74C3C;
+}
+
+.dark-mode .button-danger:hover {
+  -fx-background-color: #C0392B;
+}
+
+.dark-mode .button-secondary {
+  -fx-background-color: #7F8C8D;
+  -fx-text-fill: white;
+}
+
+.dark-mode .button-secondary:hover {
+  -fx-background-color: #6C7B7E;
+}
+
+.dark-mode .button-outline {
+  -fx-background-color: transparent;
+  -fx-border-color: #5DADE2;
+  -fx-border-width: 2;
+  -fx-text-fill: #5DADE2;
+  -fx-effect: none;
+}
+
+.dark-mode .button-outline:hover {
+  -fx-background-color: #5DADE2;
+  -fx-text-fill: white;
+  -fx-border-color: #5DADE2;
 }
 
 .dark-mode .text-field,
@@ -625,7 +677,7 @@
 .settings-control-box {
   -fx-background-color: white;
   -fx-background-radius: 8;
-  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
 }
 
 .settings-info-box {
@@ -651,7 +703,7 @@
 .dark-mode .settings-control-box {
   -fx-background-color: #16213E;
   -fx-background-radius: 8;
-  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 1);
 }
 
 .dark-mode .settings-control-box .label {
