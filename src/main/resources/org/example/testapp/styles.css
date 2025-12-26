@@ -392,6 +392,50 @@
 }
 
 /* ============================================
+   Chart Styling
+   ============================================ */
+.chart {
+  -fx-background-color: transparent;
+}
+
+.chart-content {
+  -fx-background-color: transparent;
+}
+
+.chart-title {
+  -fx-text-fill: #2C3E50;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+}
+
+.chart-legend {
+  -fx-background-color: transparent;
+  -fx-padding: 10;
+}
+
+.chart-legend-item {
+  -fx-text-fill: #2C3E50;
+}
+
+.chart-pie-label {
+  -fx-fill: #2C3E50;
+  -fx-font-size: 12px;
+}
+
+.chart-pie-label-line {
+  -fx-stroke: #BDC3C7;
+}
+
+/* Default data colors for pie chart */
+.default-color0.chart-pie {
+  -fx-pie-color: #2ecc71;
+}
+
+.default-color1.chart-pie {
+  -fx-pie-color: #e74c3c;
+}
+
+/* ============================================
    Dark Mode Overrides
    ============================================ */
 .root.dark-mode {
@@ -565,4 +609,20 @@
 
 .dark-mode .menu-item .label {
   -fx-text-fill: #EAEAEA;
+}
+
+.dark-mode .chart-title {
+  -fx-text-fill: #EAEAEA;
+}
+
+.dark-mode .chart-legend-item {
+  -fx-text-fill: #EAEAEA;
+}
+
+.dark-mode .chart-pie-label {
+  -fx-fill: #EAEAEA;
+}
+
+.dark-mode .chart-pie-label-line {
+  -fx-stroke: #7F8C8D;
 }
