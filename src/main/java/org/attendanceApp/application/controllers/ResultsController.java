@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.controllers;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.attendanceApp.application.attendance.AttendanceReport;
+import org.attendanceApp.application.utils.ExcelExporter;
+import org.attendanceApp.application.utils.PdfExporter;
 
 /**
  * Controller for displaying attendance analysis results.

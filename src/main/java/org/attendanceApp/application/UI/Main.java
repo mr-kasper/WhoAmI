@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.UI;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -20,6 +20,17 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+import org.attendanceApp.application.controllers.AnimationUtils;
+import org.attendanceApp.application.controllers.AuditLogger;
+import org.attendanceApp.application.controllers.ClassroomController;
+import org.attendanceApp.application.controllers.ConflictAnalysisController;
+import org.attendanceApp.application.controllers.HistoryController;
+import org.attendanceApp.application.controllers.LanguageManager;
+import org.attendanceApp.application.controllers.ResultsController;
+import org.attendanceApp.application.controllers.SessionManager;
+import org.attendanceApp.application.controllers.SettingsController;
+import org.attendanceApp.application.controllers.StatsController;
+import org.attendanceApp.application.controllers.StudentDetailController;
 import org.attendanceApp.application.entities.Classroom;
 
 /**
@@ -190,7 +201,7 @@ public class Main extends Application {
 
     // Load and apply professional stylesheet
     try {
-      String css = getClass().getResource("styles.css").toExternalForm();
+      String css = getClass().getResource("/org/attendanceApp/application/styles.css").toExternalForm();
       scene.getStylesheets().add(css);
       System.out.println("[UI] Professional stylesheet loaded successfully");
     } catch (Exception e) {

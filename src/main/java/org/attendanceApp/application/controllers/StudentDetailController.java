@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.controllers;
 
 import org.attendanceApp.application.entities.Claim;
 import org.attendanceApp.application.entities.LocatedStudent;

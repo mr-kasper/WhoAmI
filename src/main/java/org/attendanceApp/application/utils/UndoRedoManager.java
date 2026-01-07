@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.utils;
 
 import java.util.Stack;
 

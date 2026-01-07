@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

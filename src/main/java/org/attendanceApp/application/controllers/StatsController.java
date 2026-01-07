@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

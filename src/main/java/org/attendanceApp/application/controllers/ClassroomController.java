@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.controllers;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
@@ -27,6 +27,7 @@ import java.util.*;
 import org.attendanceApp.application.attendance.AttendanceReport;
 import org.attendanceApp.application.entities.*;
 import org.attendanceApp.application.services.FirestoreService;
+import org.attendanceApp.application.utils.UndoRedoManager;
 
 /**
  * Controller for the classroom view.

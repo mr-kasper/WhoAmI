@@ -101,7 +101,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>org.attendanceApp.application.Main</mainClass>
+                    <mainClass>org.attendanceApp.application.UI.Main</mainClass>
                 </configuration>
             </plugin>
             

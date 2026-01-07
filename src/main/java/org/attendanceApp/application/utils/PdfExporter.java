@@ -1,4 +1,4 @@
-package org.attendanceApp.application;
+package org.attendanceApp.application.utils;
 
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
